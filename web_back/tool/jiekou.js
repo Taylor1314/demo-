@@ -7,3 +7,4 @@ var URL = ' http://localhost:8000/';
 
 var URL_DENGLU = URL + 'admin/login';
 var URL_TUICHU = URL + 'admin/logout';
+var URL_GETUSER = URL + 'admin/getuser';

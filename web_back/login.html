@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="css/reset.css">
     <link rel="stylesheet" type="text/css" href="css/iconfont.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" href="./js/bootstrap/css/bootstrap.min.css">
 </head>
 
 <body>
@@ -34,6 +35,25 @@
     <script src="./js/jquery-1.12.4.min.js"></script>
     <script src="./tool/jiekou.js"></script>
     <script src="./tool/user.js"></script>
+    <!-- 进行退出确认的模态框Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                  aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">提示信息!~</h4>
+                </div>
+                <div class="modal-body">
+                    是否确认退出呢？~
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">我知道了</button>
+                    <!-- <button type="button" class="btn btn-primary" id="logoutYes">确认退出</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         // 1. 因为要提交表单，所以按钮的属性应该是type：button，将登录按钮的属性更正。
         // 2. 给登录按钮添加点击事件，
@@ -43,39 +63,31 @@
             var password = $('.input_pass').val();
             // 4.判断两个输入框中的值是否为空，空的话弹出弹框提示，并return停止函数执行。
             if (user_name == '' || password == '') {
-                alert('请填写完整信息');
+                $('#myModal').modal('show')
+                    .find('.modal-body').html('请填写完整信息'); // alert('请填写完整信息');
                 return;
             }
             // 5.如果不为空，将发送请求数据，数据形式为post，有参数。
-            user.login1({
+            user.login({
 
-
-
-
-
-            })
-            $.ajax({
-                type: 'post',
-                url: URL_DENGLU,
                 data: {
                     user_name: user_name,
                     password: password,
                 },
-                success: function(res) {
+
+                callback: function(res) {
                     // 6.判断res的code属性是否为200，成立的话直接跳转到主页面，如果不成立并且弹出弹窗提示用户。
                     if (res.code == 200) {
                         location.href = './index.html'
                     } else {
-                        alert('用户名或者密码填写不正确')
+                        $('#myModal').modal('show')
+                            .find('.modal-body').html('用户名或者密码不正确！！！请重新填写');
                     }
-
                 }
-
-
             })
-
         })
     </script>
+    <script src="./js/bootstrap/js/bootstrap.min.js"></script>
 
 </body>
 

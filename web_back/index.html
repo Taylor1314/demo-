@@ -107,6 +107,7 @@
         }
     </script>
     <script src="./tool/jiekou.js"></script>
+    <script src="./tool/user.js"></script>
     <!-- 进行退出确认的模态框Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -129,11 +130,10 @@
     <script>
         // 1.给退出登录按钮添加点击事件
         $('#logout').on('click', function() {
-            // 2.请求数据
-            $.ajax({
-                    type: 'post',
-                    url: URL_TUICHU,
-                    success: function(res) {
+                // 2.请求数据
+                user.logout({
+
+                    callback: function(res) {
                         // 2.判断响应数据是否成功
                         if (res.code == 200) {
                             // 3.成功的话将添加进来的模态框显示出来
@@ -141,14 +141,25 @@
                         }
                     }
                 })
+
                 // 4.给模态框的确认退出按钮添加点击事件，并且跳转到登录页面中
-            $('#logoutYes').on('click', function() {
-                location.href = './login.html'
-
-
+                $('#logoutYes').on('click', function() {
+                    location.href = './login.html'
+                })
             })
+            //请求数据将后台数据渲染到页面上
+        $.ajax({
+            url: URL_GETUSER,
+            success: function(res) {
+                // console.log(res);
+                var data = res.data;
+                console.log(data.user_pic);
+                console.log(res);
 
-
+                $('.user_info span').text(data.nickname);
+                $('.user_info img').prop('src', 'data.user_pic');
+                $('.user_center_link img').prop('src', 'data.user_pic')
+            }
 
         })
     </script>
