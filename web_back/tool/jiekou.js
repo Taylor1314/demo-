@@ -3,8 +3,10 @@
 
 
 
-var URL = ' http://localhost:8000/';
+var baseURL = ' http://localhost:8000/';
 
-var URL_DENGLU = URL + 'admin/login';
-var URL_TUICHU = URL + 'admin/logout';
-var URL_GETUSER = URL + 'admin/getuser';
+var URL_DENGLU = baseURL + 'admin/login';
+var URL_TUICHU = baseURL + 'admin/logout';
+var URL_GETUSER = baseURL + 'admin/getuser';
+var URL_USERINFO_GRT = baseURL + 'admin/userinfo_get';
+var URL_USERINFO_EDIT = baseURL + 'admin/userinfo_edit'

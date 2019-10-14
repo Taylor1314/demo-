@@ -39,31 +39,95 @@
                         <input type="text" class="form-control" id="inputEmail3" value="lisisi@126.com">
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="inputPassword3" class="col-sm-2 control-label">用户图标：</label>
                     <div class="col-sm-10">
                         <img src="images/2.jpg" alt="" class="user_pic">
-                        <input type="file" id="exampleInputFile">
+                        <input type="file" id="user_pic">
                     </div>
                 </div>
 
                 <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">密码：</label>
-                        <div class="col-sm-4">
-                            <input type="password" class="form-control" id="inputEmail3" value="12345678">
-                        </div>
+                    <label for="inputEmail3" class="col-sm-2 control-label">密码：</label>
+                    <div class="col-sm-4">
+                        <input type="password" class="form-control" id="inputEmail3" value="12345678">
                     </div>
-               
-    
+                </div>
+
+
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-success">修改</button>
+                        <!-- <button type="submit" class="btn btn-success">修改</button> -->
+                        <button type="button" class="btn btn-success" id="xiugai">修改</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
+    <script src="./js/bootstrap/js/bootstrap.min.js"></script>
+    <script src="./tool/user.js"></script>
+    <script src="./tool/jiekou.js"></script>
+    <script>
+        //1.将所有的input标签获取出来
+        var input = document.querySelectorAll('input');
+        var flag = false;
+        $('input').eq(3).change(function() {
+                flag = true;
+            })
+            //2. 添加获取用户信息
+        $.ajax({
+            url: URL_USERINFO_GRT,
+            success: function(res) {
+                var data = res.data;
+                $(input[0]).val(data.username)
+                $(input[1]).val(data.nickname)
+                $(input[2]).val(data.email)
+                $(input[4]).val(data.password)
+                $('.user_pic').prop('src', data.user_pic)
+            }
+        })
+        $('#xiugai').on('click', function() {
+            if (
+                input[0].value == '' ||
+                input[1].value == '' ||
+                input[2].value == '' ||
+                input[4].value == '' ||
+                !flag
+            ) {
+                alert('请填写完整!!!!')
+            }
+            $.ajax({
+                type: 'post',
+                url: URL_USERINFO_EDIT,
+                data: {
+                    username: $(input[0]).val(),
+                    nickname: $(input[1]).val(),
+                    email: $(input[2]).val(),
+                    password: $(input[4]).val(),
+                    user_pic: $('.user_pic').attr('src')
+                },
+                success: function(res) {
+                    console.log(res);
+
+                    if (res.code == 200) {
+                        console.log(res);
+
+                        parent.location.href = './login.html'
+                    }
+                }
+
+            })
+        })
+        $('#user_pic').on('change', function() {
+            // 获取文件域中的文件信息
+            var tempFile = this.files[0];
+            // 生成临时图片地址
+            var tempSrc = URL.createObjectURL(tempFile);
+            // 将临时图片地址设置给#avatar
+            $('.user_pic').prop('src', tempSrc);
+        });
+    </script>
 
 </body>
 
