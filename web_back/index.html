@@ -148,17 +148,16 @@
                 })
             })
             //请求数据将后台数据渲染到页面上
-        $.ajax({
-            url: URL_GETUSER,
-            success: function(res) {
+        user.xiugai({
+            callback: function(res) {
                 // console.log(res);
                 var data = res.data;
                 // console.log(data.user_pic);
                 // console.log(res);
 
                 $('.user_info span').text(data.nickname);
-                $('.user_info img').prop('src', 'data.user_pic');
-                $('.user_center_link img').prop('src', 'data.user_pic')
+                $('.user_info img').prop('src', data.user_pic);
+                $('.user_center_link img').prop('src', data.user_pic)
             }
 
         })

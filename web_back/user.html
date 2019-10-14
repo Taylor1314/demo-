@@ -95,7 +95,8 @@
                 input[4].value == '' ||
                 !flag
             ) {
-                alert('请填写完整!!!!')
+                alert('请填写完整!!!!');
+                return;
             }
             $.ajax({
                 type: 'post',
@@ -105,15 +106,16 @@
                     nickname: $(input[1]).val(),
                     email: $(input[2]).val(),
                     password: $(input[4]).val(),
-                    user_pic: $('.user_pic').attr('src')
+                    // user_pic: $('.user_pic').attr('src')
                 },
                 success: function(res) {
                     console.log(res);
 
-                    if (res.code == 200) {
-                        console.log(res);
 
+                    if (res.code == 200) {
                         parent.location.href = './login.html'
+                    } else {
+
                     }
                 }
 
