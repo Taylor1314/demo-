@@ -16,6 +16,7 @@ var user = {
         })
     },
     xiugai: function(Options) {
+
         $.ajax({
             url: URL_GETUSER,
             success: Options.callback
